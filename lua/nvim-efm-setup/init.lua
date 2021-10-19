@@ -12,15 +12,15 @@ local function get_filetypes()
   return utils.get_unique(tools, "filetypes")
 end
 
-local function get_something()
+local function get_languages()
   local languages = {}
 
-  for k, v in pairs(tools) do
-    for k2, v2 in pairs(v.filetypes) do
-      if languages[v2] == nil then
-        languages[v2] = {}
+  for _, tool in pairs(tools) do
+    for _, ft in pairs(tool.filetypes) do
+      if languages[ft] == nil then
+        languages[ft] = {}
       end
-      table.insert(languages[v2], v.settings)
+      table.insert(languages[ft], tool.settings)
     end
   end
 
@@ -42,13 +42,20 @@ local function get_root_dir()
 end
 
 local function get_settings()
-  local root_markers = get_root_patterns()
-  local languages = get_something()
-
   return {
-    rootMarkers = root_markers,
-    languages = languages,
+    rootMarkers = get_root_patterns(),
+    languages = get_languages(),
   }
+end
+
+local function get_on_attach()
+  return function(client)
+    client.resolved_capabilities.rename = false
+    client.resolved_capabilities.document_formatting = true
+    client.resolved_capabilities.hover = false
+    client.resolved_capabilities.goto_definition = false
+    client.resolved_capabilities.completion = false
+  end
 end
 
 function nvim_efm_setup.get_default_config(opts)
@@ -56,13 +63,7 @@ function nvim_efm_setup.get_default_config(opts)
     filetypes = get_filetypes(),
     root_dir = get_root_dir(),
     settings = get_settings(),
-    on_attach = function(client)
-      client.resolved_capabilities.rename = false
-      client.resolved_capabilities.document_formatting = true
-      client.resolved_capabilities.hover = false
-      client.resolved_capabilities.goto_definition = false
-      client.resolved_capabilities.completion = false
-    end,
+    on_attach = get_on_attach(),
   }
 end
 
