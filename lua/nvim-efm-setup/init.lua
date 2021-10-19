@@ -12,6 +12,21 @@ local function get_filetypes()
   return utils.get_unique(tools, "filetypes")
 end
 
+local function get_something()
+  local languages = {}
+
+  for k, v in pairs(tools) do
+    for k2, v2 in pairs(v.filetypes) do
+      if languages[v2] == nil then
+        languages[v2] = {}
+      end
+      table.insert(languages[v2], v.settings)
+    end
+  end
+
+  return languages
+end
+
 local function get_root_dir()
   return function(fname)
     for _, tool in pairs(tools) do
@@ -28,11 +43,7 @@ end
 
 local function get_settings()
   local root_markers = get_root_patterns()
-  local languages = {
-    lua = {
-      tools.stylua.settings,
-    },
-  }
+  local languages = get_something()
 
   return {
     rootMarkers = root_markers,
