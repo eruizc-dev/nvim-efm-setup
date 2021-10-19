@@ -5,7 +5,7 @@ local lspconfig = require("lspconfig")
 local tools = require("nvim-efm-setup.configs")
 
 local function get_root_patterns()
-  return utils.get_unique(tools, "root_pattern")
+  return utils.get_unique(tools, "root_patterns")
 end
 
 local function get_filetypes()
@@ -32,7 +32,7 @@ local function get_root_dir()
     for _, tool in pairs(tools) do
       for _, ft in pairs(tool.filetypes) do
         if fname:match("." .. ft) then
-          local root_patterns = vim.tbl_flatten(tool.root_pattern)
+          local root_patterns = vim.tbl_flatten(tool.root_patterns)
           return lspconfig.util.root_pattern(root_patterns)(fname)
         end
       end
