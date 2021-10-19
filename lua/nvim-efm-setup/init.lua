@@ -3,38 +3,29 @@ local nvim_efm_setup = {}
 local lspconfig = require("lspconfig")
 local tools = require("nvim-efm-setup.configs")
 
-local function get_root_patterns()
-  local root_map = {}
+local function get_unique(list, key)
+  local map = {}
 
-  for _, tool in pairs(tools) do
-    for _, root in pairs(tool.root_pattern) do
-      root_map[root] = true
+  for _, element in pairs(list) do
+    for _, value in pairs(element[key]) do
+      map[value] = true
     end
   end
 
-  local root_arr = {}
-  for ft, _ in pairs(root_map) do
-    table.insert(root_arr, ft)
+  local arr = {}
+  for ft, _ in pairs(map) do
+    table.insert(arr, ft)
   end
 
-  return root_arr
+  return arr
+end
+
+local function get_root_patterns()
+  return get_unique(tools, "root_pattern")
 end
 
 local function get_filetypes()
-  local ft_map = {}
-
-  for _, tool in pairs(tools) do
-    for _, ft in pairs(tool.filetypes) do
-      ft_map[ft] = true
-    end
-  end
-
-  local ft_arr = {}
-  for ft, _ in pairs(ft_map) do
-    table.insert(ft_arr, ft)
-  end
-
-  return ft_arr
+  return get_unique(tools, "filetypes")
 end
 
 local function get_root_dir()
