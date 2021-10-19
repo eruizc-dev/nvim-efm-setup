@@ -1,28 +1,61 @@
 local nvim_efm_setup = {}
 
 local lspconfig = require("lspconfig")
-local configs = require("nvim-efm-setup.configs")
+local tools = require("nvim-efm-setup.configs")
 
+local function get_root_patterns()
+  local root_map = {}
+
+  for _, tool in pairs(tools) do
+    for _, root in pairs(tool.root_pattern) do
+      root_map[root] = true
+    end
+  end
+
+  local root_arr = {}
+  for ft, _ in pairs(root_map) do
+    table.insert(root_arr, ft)
+  end
+
+  return root_arr
+end
 
 local function get_filetypes()
-  local filetypes = { "lua" }
-  return filetypes
+  local ft_map = {}
+
+  for _, tool in pairs(tools) do
+    for _, ft in pairs(tool.filetypes) do
+      ft_map[ft] = true
+    end
+  end
+
+  local ft_arr = {}
+  for ft, _ in pairs(ft_map) do
+    table.insert(ft_arr, ft)
+  end
+
+  return ft_arr
 end
 
 local function get_root_dir()
   return function(fname)
-    if fname:match(".lua") then
-      return lspconfig.util.root_pattern(".stylua.toml")(fname)
+    for _, tool in pairs(tools) do
+      for _, ft in pairs(tool.filetypes) do
+        if fname:match("." .. ft) then
+          local root_patterns = vim.tbl_flatten(tool.root_pattern)
+          return lspconfig.util.root_pattern(root_patterns)(fname)
+        end
+      end
     end
     return nil
   end
 end
 
 local function get_settings()
-  local root_markers = { "checkstyle.xml", ".stylua.toml", ".git" }
+  local root_markers = get_root_patterns()
   local languages = {
     lua = {
-      configs.stylua.settings,
+      tools.stylua.settings,
     },
   }
 
@@ -43,7 +76,7 @@ function nvim_efm_setup.get_default_config(opts)
       client.resolved_capabilities.hover = false
       client.resolved_capabilities.goto_definition = false
       client.resolved_capabilities.completion = false
-    end
+    end,
   }
 end
 
