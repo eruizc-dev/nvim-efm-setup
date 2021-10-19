@@ -31,4 +31,19 @@ return {
       formatStdin = true,
     },
   },
+  checkstyle = {
+    filetypes = { "java" },
+    root_patterns = { "checkstyle.xml" },
+    healthCheck = "java -jar"
+      .. vim.fn.expand("$CHECKSTYLE_ROOT/checkstyle-*.jar")
+      .. " --version",
+    settings = {
+      lintCommand = "java -jar "
+        .. vim.fn.expand("$CHECKSTYLE_ROOT/checkstyle-*.jar")
+        .. " -c checkstyle.xml ${INPUT}",
+      lintFormats = { "[ERROR] %f:%l:%c: %m" },
+      lintIgnoreExitCode = true,
+      lintSeverity = 2,
+    },
+  }
 }
