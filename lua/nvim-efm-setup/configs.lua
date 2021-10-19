@@ -18,4 +18,17 @@ return {
       lintSeverity = 3,
     },
   },
+  eslint_d = {
+    filetypes = { "js", "ts", "jsx", "tsx" },
+    root_patterns = { ".eslintrc" },
+    healthCheck = "eslint_d --version",
+    settings = {
+      lintCommand = "eslint_d -f unix --stdin",
+      lintStdin = true,
+      lintFormats = { "%f:%l:%c: %m" },
+      lintIgnoreExitCode = true,
+      formatCommand = "eslint_d --fix-to-stdout --stdin",
+      formatStdin = true,
+    },
+  },
 }
