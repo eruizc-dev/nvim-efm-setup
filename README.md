@@ -17,6 +17,14 @@ configuration. Why not make it easy?
     require'lspconfig'.efm.setup(require('nvim-efm-setup').get_default_config())
     ```
 
+### Supported linters and formatters
+
+Check the [wiki](https://github.com/eruizc-dev/nvim-efm-setup/wiki) for that.
+
+Installation instructions can be found
+[here](https://github.com/eruizc-dev/nvim-efm-setup/wiki/Install-linters-and-formatters)
+
+
 ### Contributing
 
 Your favorite linter/formatter is not supported yet? Add it to
