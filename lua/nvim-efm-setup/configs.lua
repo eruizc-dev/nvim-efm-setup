@@ -22,7 +22,7 @@ return {
   eslint_d = {
     filetypes = { "javascript", "typescript", "javascript.jsx", "typescript.tsx", "javascriptreact", "typescriptreact" },
     file_extensions = { "js", "ts", "jsx", "tsx" },
-    root_patterns = { ".eslintrc" },
+    root_patterns = { ".eslintrc*" },
     healthCheck = "eslint_d --version",
     settings = {
       lintCommand = "eslint_d -f unix --stdin",
