@@ -2,7 +2,7 @@ return {
   stylua = {
     filetypes = { "lua" },
     file_extensions = { "lua" },
-    root_patterns = { "stylua.toml", ".stylua.toml" },
+    root_patterns = { "*stylua.toml" },
     healthCheck = "stylua --version",
     settings = {
       lintCommand = "stylua --check --color never -",
