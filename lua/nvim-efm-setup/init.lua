@@ -12,7 +12,7 @@ local function get_filetypes()
   return utils.get_unique(tools, "filetypes")
 end
 
-local function get_languages()
+local function get_language_settings()
   local languages = {}
 
   for _, tool in pairs(tools) do
@@ -30,8 +30,8 @@ end
 local function get_root_dir()
   return function(fname)
     for _, tool in pairs(tools) do
-      for _, ft in pairs(tool.filetypes) do
-        if fname:match("." .. ft) then
+      for _, extension in pairs(tool.file_extensions) do
+        if fname:match("." .. extension) then
           local root_patterns = vim.tbl_flatten(tool.root_patterns)
           return lspconfig.util.root_pattern(root_patterns)(fname)
         end
@@ -44,7 +44,7 @@ end
 local function get_settings()
   return {
     rootMarkers = get_root_patterns(),
-    languages = get_languages(),
+    languages = get_language_settings(),
   }
 end
 

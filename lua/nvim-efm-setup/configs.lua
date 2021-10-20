@@ -1,6 +1,7 @@
 return {
   stylua = {
     filetypes = { "lua" },
+    file_extensions = { "lua" },
     root_patterns = { "stylua.toml", ".stylua.toml" },
     healthCheck = "stylua --version",
     settings = {
@@ -19,7 +20,8 @@ return {
     },
   },
   eslint_d = {
-    filetypes = { "js", "ts", "jsx", "tsx" },
+    filetypes = { "javascript", "typescript", "javascript.jsx", "typescript.tsx", "javascriptreact", "typescriptreact" },
+    file_extensions = { "js", "ts", "jsx", "tsx" },
     root_patterns = { ".eslintrc" },
     healthCheck = "eslint_d --version",
     settings = {
@@ -33,6 +35,7 @@ return {
   },
   checkstyle = {
     filetypes = { "java" },
+    file_extensions = { "java" },
     root_patterns = { "checkstyle.xml" },
     healthCheck = "java -jar"
       .. vim.fn.expand("$CHECKSTYLE_ROOT/checkstyle-*.jar")
