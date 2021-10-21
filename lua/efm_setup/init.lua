@@ -1,8 +1,8 @@
 local nvim_efm_setup = {}
 
-local utils = require("nvim-efm-setup.utils")
+local utils = require("efm_setup.utils")
 local lspconfig = require("lspconfig")
-local tools = require("nvim-efm-setup.configs")
+local tools = require("efm_setup.configs")
 
 local function get_root_patterns()
   return utils.get_unique(tools, "root_patterns")

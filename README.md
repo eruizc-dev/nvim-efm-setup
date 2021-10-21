@@ -14,7 +14,7 @@ configuration. Why not make it easy?
     ```
  3. Setup efm-langserver
     ```lua
-    require'lspconfig'.efm.setup(require('nvim-efm-setup').get_default_config())
+    require'lspconfig'.efm.setup(require('efm_setup').get_default_config())
     ```
 
 ### Supported linters and formatters
