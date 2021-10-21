@@ -31,6 +31,7 @@ return {
       lintIgnoreExitCode = true,
       formatCommand = "eslint_d --fix-to-stdout --stdin",
       formatStdin = true,
+      lintSeverity = 3,
     },
   },
   checkstyle = {
