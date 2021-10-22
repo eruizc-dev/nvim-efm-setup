@@ -51,6 +51,7 @@ local function get_on_attach()
   end
 end
 
+-- TODO: This needs to be heavily optimized
 local function filter_installed(declared_linters)
   local installed_linters = {};
   local handlers = {}
