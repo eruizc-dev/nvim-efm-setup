@@ -90,4 +90,14 @@ return {
       formatStdin = true,
     },
   },
+  lua_format = {
+    filetypes = { "lua" },
+    file_extensions = { "lua" },
+    root_patterns = { ".lua-format" },
+    healthCheck = "lua-format --help",
+    settings = {
+      formatCommand = "lua-format -i ${INPUT}",
+      formatStdin = false,
+    },
+  }
 }
