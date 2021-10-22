@@ -49,5 +49,45 @@ return {
       lintIgnoreExitCode = true,
       lintSeverity = 2,
     },
-  }
+  },
+  prettier_babel = {
+    filetypes = { "javascript", "typescript", "javascript.jsx", "typescript.tsx", "javascriptreact", "typescriptreact" },
+    file_extensions = { "js", "ts", "jsx", "tsx" },
+    root_patterns = { ".prettierrc*" },
+    healthCheck = "prettier --version",
+    settings = {
+      formatCommand = "prettier --parser babel",
+      formatStdin = true,
+    },
+  },
+  prettier_json = {
+    filetypes = { "json", "jsonc" },
+    file_extensions = { "json" },
+    root_patterns = { ".prettierrc*" },
+    healthCheck = "prettier --version",
+    settings = {
+      formatCommand = "prettier --parser json",
+      formatStdin = true,
+    },
+  },
+  prettier_html = {
+    filetypes = { "html" },
+    file_extensions = { "html" },
+    root_patterns = { ".prettierrc*" },
+    healthCheck = "prettier --version",
+    settings = {
+      formatCommand = "prettier --parser html",
+      formatStdin = true,
+    },
+  },
+  prettier_css = {
+    filetypes = { "css" },
+    file_extensions = { "css" },
+    root_patterns = { ".prettierrc*" },
+    healthCheck = "prettier --version",
+    settings = {
+      formatCommand = "prettier --parser css",
+      formatStdin = true,
+    },
+  },
 }
