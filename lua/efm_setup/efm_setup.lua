@@ -56,7 +56,8 @@ local function filter_installed(declared_linters)
   local handlers = {}
 
   for _, linter in pairs(declared_linters) do
-    local exit_code = os.execute(linter.healthCheck)
+    local cmd = linter.healthCheck .. " > /dev/null 2>&1"
+    local exit_code = os.execute(cmd)
     if exit_code == 0 then
       table.insert(installed_linters, linter)
     end
