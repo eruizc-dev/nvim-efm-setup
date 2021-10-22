@@ -42,21 +42,37 @@ end
 
 local function get_on_attach()
   return function(client)
-    client.resolved_capabilities.rename = false
     client.resolved_capabilities.document_formatting = true
+
+    client.resolved_capabilities.rename = false
     client.resolved_capabilities.hover = false
     client.resolved_capabilities.goto_definition = false
     client.resolved_capabilities.completion = false
   end
 end
 
-function M.get_language_server_options(config)
+local function filter_installed(declared_linters)
+  local installed_linters = {};
+  local handlers = {}
+
+  for _, linter in pairs(declared_linters) do
+    local exit_code = os.execute(linter.healthCheck)
+    if exit_code == 0 then
+      table.insert(installed_linters, linter)
+    end
+  end
+
+  return installed_linters
+end
+
+function M.get_language_server_options(linters)
+  local installed_linters = filter_installed(linters)
   return {
-    filetypes = get_filetypes(config),
-    root_dir = get_root_dir(config),
+    filetypes = get_filetypes(installed_linters),
+    root_dir = get_root_dir(installed_linters),
     settings = {
-      rootMarkers = get_root_patterns(config),
-      languages = get_language_settings(config),
+      rootMarkers = get_root_patterns(installed_linters),
+      languages = get_language_settings(installed_linters),
     },
     on_attach = get_on_attach(),
   }
