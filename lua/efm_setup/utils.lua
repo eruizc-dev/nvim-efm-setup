@@ -31,4 +31,25 @@ function utils.split_cmd(command)
   return cmd, args
 end
 
+function utils.pairs_parallel(tb, action, timeout)
+  local tasks = {}
+
+  for key, value in pairs(tb) do
+    local task = { done = false }
+    table.insert(tasks, task)
+    action(key, value, task)
+  end
+
+  vim.wait(timeout or 250, function()
+    for _, task in ipairs(tasks) do
+      if task.done == false then
+        return false
+      end
+    end
+    return true
+  end)
+
+  print(vim.inspect(tasks))
+end
+
 return utils

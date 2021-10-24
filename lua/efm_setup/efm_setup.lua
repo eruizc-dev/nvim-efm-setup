@@ -53,26 +53,15 @@ end
 
 local function filter_installed(declared_linters)
   local installed_linters = {};
-  local tasks = {}
 
-  for name, settings in pairs(declared_linters) do
-    tasks[name] = true
+  utils.pairs_parallel(declared_linters, function(name, settings, task)
     local cmd, args = utils.split_cmd(settings.healthCheck)
     local handle = vim.loop.spawn(cmd, { args = args }, function(code)
       if code == 0 then
         table.insert(installed_linters, settings)
       end
-      tasks[name] = false
+      task.done = true
     end)
-  end
-
-  vim.wait(250, function()
-    for _, executing in pairs(tasks) do
-      if executing == true then
-        return false
-      end
-    end
-    return true
   end)
 
   return installed_linters
