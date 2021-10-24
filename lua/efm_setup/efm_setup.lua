@@ -51,18 +51,29 @@ local function get_on_attach()
   end
 end
 
--- TODO: This needs to be heavily optimized
 local function filter_installed(declared_linters)
   local installed_linters = {};
-  local handlers = {}
+  local tasks = {}
 
-  for _, linter in pairs(declared_linters) do
-    local cmd = linter.healthCheck .. " > /dev/null 2>&1"
-    local exit_code = os.execute(cmd)
-    if exit_code == 0 then
-      table.insert(installed_linters, linter)
-    end
+  for name, settings in pairs(declared_linters) do
+    tasks[name] = true
+    local cmd, args = utils.split_cmd(settings.healthCheck)
+    local handle = vim.loop.spawn(cmd, { args = args }, function(code)
+      if code == 0 then
+        table.insert(installed_linters, settings)
+      end
+      tasks[name] = false
+    end)
   end
+
+  vim.wait(1000, function()
+    for _, executing in pairs(tasks) do
+      if executing == true then
+        return false
+      end
+    end
+    return true
+  end)
 
   return installed_linters
 end

@@ -3,7 +3,7 @@ return {
     filetypes = { "lua" },
     file_extensions = { "lua" },
     root_patterns = { "*stylua.toml" },
-    healthCheck = "stylua --version",
+    healthCheck = { "stylua", "--version" },
     settings = {
       lintCommand = "stylua --check --color never -",
       lintFormats = {
@@ -23,7 +23,7 @@ return {
     filetypes = { "javascript", "typescript", "javascript.jsx", "typescript.tsx", "javascriptreact", "typescriptreact" },
     file_extensions = { "js", "ts", "jsx", "tsx" },
     root_patterns = { ".eslintrc*" },
-    healthCheck = "eslint_d --version",
+    healthCheck = { "eslint_d", "--version" },
     settings = {
       lintCommand = "eslint_d -f unix --stdin",
       lintStdin = true,
@@ -38,9 +38,7 @@ return {
     filetypes = { "java" },
     file_extensions = { "java" },
     root_patterns = { "checkstyle.xml" },
-    healthCheck = "java -jar"
-      .. vim.fn.expand("$CHECKSTYLE_ROOT/checkstyle-*.jar")
-      .. " --version",
+    healthCheck = { "java", "-jar", vim.fn.expand("$CHECKSTYLE_ROOT/checkstyle-*.jar"), " --version" },
     settings = {
       lintCommand = "java -jar "
         .. vim.fn.expand("$CHECKSTYLE_ROOT/checkstyle-*.jar")
@@ -54,7 +52,7 @@ return {
     filetypes = { "javascript", "typescript", "javascript.jsx", "typescript.tsx", "javascriptreact", "typescriptreact" },
     file_extensions = { "js", "ts", "jsx", "tsx" },
     root_patterns = { ".prettierrc*" },
-    healthCheck = "prettier --version",
+    healthCheck = { "prettier", " --version" },
     settings = {
       formatCommand = "prettier --parser babel",
       formatStdin = true,
@@ -64,7 +62,7 @@ return {
     filetypes = { "json", "jsonc" },
     file_extensions = { "json" },
     root_patterns = { ".prettierrc*" },
-    healthCheck = "prettier --version",
+    healthCheck = { "prettier", "--version" },
     settings = {
       formatCommand = "prettier --parser json",
       formatStdin = true,
@@ -74,7 +72,7 @@ return {
     filetypes = { "html" },
     file_extensions = { "html" },
     root_patterns = { ".prettierrc*" },
-    healthCheck = "prettier --version",
+    healthCheck = { "prettier", "--version" },
     settings = {
       formatCommand = "prettier --parser html",
       formatStdin = true,
@@ -84,7 +82,7 @@ return {
     filetypes = { "css" },
     file_extensions = { "css" },
     root_patterns = { ".prettierrc*" },
-    healthCheck = "prettier --version",
+    healthCheck = { "prettier", "--version" },
     settings = {
       formatCommand = "prettier --parser css",
       formatStdin = true,
@@ -94,7 +92,7 @@ return {
     filetypes = { "lua" },
     file_extensions = { "lua" },
     root_patterns = { ".lua-format" },
-    healthCheck = "lua-format --help",
+    healthCheck = { "lua-format", "--help" },
     settings = {
       formatCommand = "lua-format -i ${INPUT}",
       formatStdin = false,
