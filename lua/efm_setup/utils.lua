@@ -48,8 +48,6 @@ function utils.pairs_parallel(tb, action, timeout)
     end
     return true
   end)
-
-  print(vim.inspect(tasks))
 end
 
 return utils
