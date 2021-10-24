@@ -66,7 +66,7 @@ local function filter_installed(declared_linters)
     end)
   end
 
-  vim.wait(1000, function()
+  vim.wait(250, function()
     for _, executing in pairs(tasks) do
       if executing == true then
         return false
