@@ -1,4 +1,6 @@
-# nvim-efm-setup
+# nvim-efm-setup - UNMAINTAINED
+
+Try it at your own risk, I believe this no longer works...
 
 [EFM](https://github.com/mattn/efm-langserver) is really cool, but requires some
 configuration. Why not make it easy?
